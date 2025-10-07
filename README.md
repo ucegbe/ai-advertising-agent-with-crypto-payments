@@ -18,7 +18,7 @@ An AI agent that creates complete advertising campaigns while autonomously payin
 ## Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ucegbe/ai-advertising-agent-with-crypto-payments.git
 pip install -r requirements.txt
 ```
 
