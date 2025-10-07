@@ -57,7 +57,7 @@ BASE_URL=http://0.0.0.0:4021
 
 ## Key Features
 
-- 🤖 Autonomous AI agent using Strands + Claude Sonnet 4
+- 🤖 Autonomous AI agent using Strands + Bedrock LLM(s)
 - 💳 Cryptocurrency micropayments via X402 protocol  
 - 🎨 AI image generation for ad visuals
 - 🌤️ Real-time weather data integration
