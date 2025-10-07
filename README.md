@@ -6,5 +6,6 @@ Autonomous AI Advertising Agent with Crypto Payments using Strands Agents, Coinb
 2. OpenWeather API key
 
 ## Run the Example Solution
-1. Run the `paid_server.py` file using the python command `python3 paid_server.py`
-2. Runt the `agentkit-x402-strands.ipynb` notebook
+1. Create env variables for `ADDRESS` (receiving payment address) and `OPENWEATHER_API_KEY` (OpenWeather API key)
+2. Run the `paid_server.py` file using the python command `python3 paid_server.py`
+3. Runt the `agentkit-x402-strands.ipynb` notebook
