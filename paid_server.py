@@ -15,8 +15,8 @@ import requests
 load_dotenv()
 
 # Get configuration from environment - properly use environment variable
-ADDRESS = os.getenv("ADDRESS", "WALLET ADRESSS")  # Receiving Payment address
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "OPENWEATHER API KEY")  # OpenWeather API key
+ADDRESS = os.getenv("ADDRESS")  # Receiving Payment address
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")  # OpenWeather API key
 
 if not ADDRESS:
     raise ValueError("Missing required environment variable: ADDRESS")
