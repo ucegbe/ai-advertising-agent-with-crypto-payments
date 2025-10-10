@@ -2,82 +2,134 @@
 
 An AI agent that creates complete advertising campaigns while autonomously paying for premium services using cryptocurrency via the X402 payment protocol.
 
-## ⚠️ **SAFETY NOTICE**
-**TESTNET ONLY - DO NOT USE REAL FUNDS**
-- Uses Base Sepolia testnet exclusively
-- Only use test credentials and testnet tokens
-- Never run with production wallets or mainnet
+## Overview
+
+### Sample Details
+
+| Information            | Details                                                    |
+|------------------------|------------------------------------------------------------|
+| **Agent Architecture** | Single-agent                                               |
+| **Native Tools**       | image_reader                                               |
+| **Custom Tools**       | list_available_services, get_service_schema, create_ad_html |
+| **MCP Servers**        | None                                                       |
+| **Use Case Vertical**  | Marketing & Advertising                                    |
+| **Complexity**         | Advanced                                                   |
+| **Model Provider**     | Amazon Bedrock (Claude Sonnet 4)                          |
+| **SDK Used**           | Strands Agents SDK + Coinbase AgentKit                    |
+
+### Architecture
+
+The sample demonstrates integration between multiple systems:
+- **Strands AI Framework** → Agent reasoning and tool orchestration
+- **Coinbase AgentKit** → Blockchain wallet and transaction management  
+- **X402 Protocol** → HTTP-based micropayment standard for API access
+- **External APIs** → Payment-gated image generation and weather services
+
+### Key Features
+
+- **Economic Agency**: AI agent manages its own budget and purchases services autonomously
+- **Crypto-Native Payments**: Uses USDC on Base Sepolia testnet for service payments
+- **Multi-Service Integration**: Combines weather data and AI image generation for enhanced campaigns
+- **Complete Campaign Generation**: Produces ready-to-deploy HTML advertising assets
 
 ## Prerequisites
 
-- Python 3.10+
-- Coinbase Developer Platform account (for testnet API keys)
+- Python **3.10+**
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) for dependency management
+- AWS CLI configured with appropriate credentials
+- [Model access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access-modify.html) enabled for Claude Sonnet 4
+- Coinbase Developer Platform account (testnet)
 - OpenWeather API key
-- Base Sepolia testnet wallet with test USDC
+- **⚠️ TESTNET ONLY**: Base Sepolia testnet wallet with test USDC
 
-## Installation
+## Setup
 
-```bash
-git clone https://github.com/ucegbe/ai-advertising-agent-with-crypto-payments.git
-pip install -r requirements.txt
-```
-
-## Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-# Coinbase Developer Platform (Base Sepolia Testnet)
-CDP_API_KEY_ID=your_cdp_api_key_id
-CDP_API_KEY_SECRET=your_cdp_api_key_secret
-CDP_WALLET_SECRET=your_cdp_wallet_secret
-
-# Payment receiving address (Base Sepolia testnet address)
-ADDRESS=0xYourTestnetAddressHere
-
-# OpenWeather API
-OPENWEATHER_API_KEY=your_openweather_api_key
-
-# Server configuration (optional)
-BASE_URL=http://0.0.0.0:4021
-```
-
-## Quick Start
-
-1. **Start the payment server:**
+1. **Configure environment variables:**
    ```bash
-   python paid_server.py
+   cp .env.example .env
+   # Edit .env with your configuration:
+   # - CDP_API_KEY_ID, CDP_API_KEY_SECRET, CDP_WALLET_SECRET (Coinbase testnet)
+   # - ADDRESS (Base Sepolia testnet receiving address)
+   # - OPENWEATHER_API_KEY
    ```
 
-2. **Run the notebook:**
-   Open `agentkit-x402-strands.ipynb` and execute cells sequentially
+2. **Install dependencies:**
+   ```bash
+   uv sync
+   ```
 
-3. **Generate ads:**
-   The agent will automatically discover services, make payments, and create complete ad campaigns with visuals.
+3. **Start the payment server:**
+   ```bash
+   uv run paid_server.py
+   ```
 
-## Key Features
+## Usage
 
-- 🤖 Autonomous AI agent using Strands + Bedrock LLM(s)
-- 💳 Cryptocurrency micropayments via X402 protocol  
-- 🎨 AI image generation for ad visuals
-- 🌤️ Real-time weather data integration
-- 📱 Multi-platform ad creation (social, display, email)
-- 📄 Complete HTML campaign output
+**Run the advertising agent:**
+```bash
+jupyter notebook agentkit-x402-strands.ipynb
+```
 
-## Architecture
+**Execute the sample:**
+1. Open the notebook and run cells sequentially
+2. The agent will automatically:
+   - Discover available services
+   - Make cryptocurrency payments for premium APIs
+   - Generate weather-responsive ad campaigns
+   - Create visual assets using AI image generation
+   - Output complete HTML advertising campaigns
 
-- **Agent**: Strands AI framework + Coinbase AgentKit
-- **Payments**: X402 protocol on Base Sepolia testnet
-- **Services**: Payment-gated image generation and weather APIs
-- **Output**: Production-ready HTML ad campaigns
+**Example interaction:**
+```python
+response = advertising_agent("""Generate an ad for:
+    product="ice cream shop promotion",
+    city="Miami,US", 
+    platform="social-media"
+""")
+```
 
-## Safety Reminders
+## Example Output
 
-- ✅ Base Sepolia testnet only
-- ✅ Test credentials and tokens only  
-- ❌ Never use real funds or mainnet
-- ❌ Never expose production keys
+The agent produces:
+- Weather-responsive ad copy based on real-time conditions
+- AI-generated tropical imagery for campaigns  
+- Complete HTML files with embedded visuals
+- Multi-platform advertising assets (social media, display, email)
+
+## Troubleshooting
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| Payment failures | Insufficient testnet USDC | Fund wallet via Base Sepolia faucet |
+| API key errors | Missing environment variables | Verify all required keys in `.env` |
+| Image generation fails | Payment server not running | Start `paid_server.py` first |
+
+## Safety Notice
+
+**⚠️ TESTNET ONLY - DO NOT USE REAL FUNDS**
+- This sample uses Base Sepolia testnet exclusively
+- Only use test credentials and testnet tokens
+- Never run with production wallets or mainnet addresses
+- Educational demonstration purposes only
+
+## Cleanup
+
+Stop the payment server:
+```bash
+# Press Ctrl+C to stop paid_server.py
+```
+
+No additional infrastructure cleanup required.
 
 ---
 
-**See the notebook for detailed explanations and step-by-step execution.**
+## Disclaimer
+
+This sample is provided for educational and demonstration purposes only. It is not intended for production use without further development, testing, and hardening.
+
+For production deployments, consider:
+- Implementing appropriate content filtering and safety measures
+- Following security best practices for cryptocurrency handling
+- Conducting thorough testing on testnets before any mainnet deployment
+- Reviewing and adjusting payment amounts and security configurations
+- Implementing proper wallet management and key security practices
