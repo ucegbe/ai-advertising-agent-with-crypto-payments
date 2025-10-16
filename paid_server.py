@@ -1,5 +1,4 @@
 import os
-import logging
 from typing import Any, Dict, Optional
 
 from dotenv import load_dotenv
@@ -10,6 +9,7 @@ from x402.types import EIP712Domain, TokenAmount, TokenAsset
 from strands import Agent
 from strands_tools import generate_image as generate_image_tool
 import requests
+import uvicorn
 
 # Load environment variables
 load_dotenv()
@@ -17,6 +17,9 @@ load_dotenv()
 # Get configuration from environment - properly use environment variable
 ADDRESS = os.getenv("ADDRESS")  # Receiving Payment address
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")  # OpenWeather API key
+# Use environment variable or default to localhost for security
+HOST = os.getenv("HOST", "127.0.0.1")  # Defaults to localhost
+PORT = int(os.getenv("PORT", 4021))
 
 if not ADDRESS:
     raise ValueError("Missing required environment variable: ADDRESS")
@@ -133,10 +136,13 @@ def get_weather_data(city: str, units: str = "metric") -> Dict[str, Any]:
     }
 
     try:
-        response = requests.get(base_url, params=params)
+        response = requests.get(base_url, params=params, timeout=(30, 30))
         response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
         weather_data = response.json()
         return weather_data
+    except requests.exceptions.Timeout:
+        print(f"Timeout error fetching weather data for {city}")
+        return f"Timeout error fetching weather data for {city}"
     except requests.exceptions.RequestException as e:
         print(f"Error fetching weather data: {e}")
         return f"Error fetching weather data: {e}"
@@ -300,11 +306,10 @@ async def get_weather(request: WeatherRequest) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    import uvicorn
 
     uvicorn.run(
         app,
-        host="0.0.0.0",
-        port=4021,
+        host=HOST,
+        port=PORT,
         log_level="info"
     )
