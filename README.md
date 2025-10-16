@@ -55,23 +55,18 @@ The sample demonstrates integration between multiple systems:
 
 2. **Install dependencies:**
    ```bash
-   uv sync
+   pip install -r requirements.txt
    ```
 
-3. **Start the payment server:**
+3. **Start the payment server on a new terminal:**
    ```bash
-   uv run paid_server.py
+   python3 paid_server.py
    ```
 
 ## Usage
 
-**Run the advertising agent:**
-```bash
-jupyter notebook agentkit-x402-strands.ipynb
-```
-
 **Execute the sample:**
-1. Open the notebook and run cells sequentially
+1. Open the `notebook agentkit-x402-strands.ipynb` notebook and run cells sequentially
 2. The agent will automatically:
    - Discover available services
    - Make cryptocurrency payments for premium APIs
